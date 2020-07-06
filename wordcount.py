@@ -20,33 +20,45 @@ next milestone.
 
 Implement the create_word_dict() helper function that has been defined in
 order to avoid code duplication within print_words() and print_top(). It
-should return a dictionary with words as keys, and their counts as values.
+should return a dictionary with words as keys, and their counts_dict as values.
 """
 
 # Your name, plus anyone who helped you with this assignment
 # Give credit where credit is due.
-__author__ = "???"
+__author__ = "Edwin Torres"
 
 import sys
 
 
 def create_word_dict(filename):
     """Returns a word/count dict for the given file."""
-    # Your code here
-    return
+    with open (filename) as reader:
+        reader = reader.read().lower()
+        counts_dict = dict()
+        words = reader.split()
+        for word in words:
+            if word in counts_dict:
+                counts_dict[word] += 1
+            else:
+                counts_dict[word] = 1
+    return counts_dict
 
 
 def print_words(filename):
     """Prints one per line '<word> : <count>', sorted
     by word for the given file.
     """
-    # Your code here
+    words_dict = create_word_dict(filename)
+    for key in sorted(words_dict.keys()):
+        print("%s: %s" % (key, words_dict[key]))
     return
 
 
 def print_top(filename):
     """Prints the top count listing for the given file."""
-    # Your code here
+    words_dict = create_word_dict(filename)
+    for key, value in sorted(words_dict.items(), key=lambda item: item[1], reverse=True)[:20]:
+        print("%s: %s" % (key, value))
     return
 
 
